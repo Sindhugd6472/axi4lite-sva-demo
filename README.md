@@ -26,13 +26,17 @@ FAIL (expected assertion failure; each test intentionally violates one rule):
 
 | +TEST= | Should fail assertion |
 |---|---|
-| FAIL_AW_PAYLOAD_CHANGE | `a_AW_payload_stable_while_stalled` (axi4lite_props.sv:14) |
-| FAIL_AWVALID_DROP_DURING_STALL | `a_AW_valid_sticky_until_handshake` (axi4lite_props.sv:20) |
-| FAIL_W_PAYLOAD_CHANGE | `a_W_payload_stable_while_stalled` (axi4lite_props.sv:30) |
-| FAIL_WVALID_DROP_DURING_STALL | `a_W_valid_sticky_until_handshake` (axi4lite_props.sv:36) |
-| FAIL_B_PAYLOAD_CHANGE | `a_B_payload_stable_while_stalled` (axi4lite_props.sv:46) |
-| FAIL_BVALID_DROP_DURING_STALL | `a_B_valid_sticky_until_handshake` (axi4lite_props.sv:52) |
-| FAIL_AR_PAYLOAD_CHANGE | `a_AR_payload_stable_while_stalled` (axi4lite_props.sv:62) |
-| FAIL_ARVALID_DROP_DURING_STALL | `a_AR_valid_sticky_until_handshake` (axi4lite_props.sv:68) |
-| FAIL_R_PAYLOAD_CHANGE | `a_R_payload_stable_while_stalled` (axi4lite_props.sv:78) |
-| FAIL_RVALID_DROP_DURING_STALL | `a_R_valid_sticky_until_handshake` (axi4lite_props.sv:84) |
+| FAIL_AW_PAYLOAD_CHANGE | `a_AW_payload_stable_while_stalled` |
+| FAIL_AW_VALID_DROP_DURING_STALL | `a_AW_valid_sticky_until_handshake` |
+| FAIL_W_PAYLOAD_CHANGE | `a_W_payload_stable_while_stalled` |
+| FAIL_W_VALID_DROP_DURING_STALL | `a_W_valid_sticky_until_handshake` |
+| FAIL_B_PAYLOAD_CHANGE | `a_B_payload_stable_while_stalled` |
+| FAIL_B_VALID_DROP_DURING_STALL | `a_B_valid_sticky_until_handshake` |
+| FAIL_AR_PAYLOAD_CHANGE | `a_AR_payload_stable_while_stalled` |
+| FAIL_AR_VALID_DROP_DURING_STALL | `a_AR_valid_sticky_until_handshake` |
+| FAIL_R_PAYLOAD_CHANGE | `a_R_payload_stable_while_stalled` |
+| FAIL_R_VALID_DROP_DURING_STALL | `a_R_valid_sticky_until_handshake` |
+
+## Automated assertion checks
+
+Run `python3 tests/run_assertions.py` with Verilator and a C++ toolchain installed. It builds with assertions enabled, requires PASS_SMOKE to succeed, and requires all fifteen FAIL cases (including payload changes on each channel's handshake cycle) to trigger their specifically named assertion. Negative-case nonzero exits are expected. The checker preserves complete bus widths and checks payload stability through the handshake cycle after a stall. This DUT is a stimulus fixture, not a functional AXI memory.
