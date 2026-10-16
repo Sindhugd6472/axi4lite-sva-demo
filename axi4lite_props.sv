@@ -1,11 +1,11 @@
 // ---- AW channel ----
 
 
-// (1) Payload stable while stalled (only enforced if stall continues)
+// (1) Payload stable while stalled (including the cycle that completes the handshake)
 property p_AW_payload_stable_while_stalled;
   @(posedge ACLK) disable iff(!ARESETn)
-    (AWVALID && !AWREADY) |-> ##1
-            (!( AWVALID && !AWREADY ) || ({ AWADDR, AWPROT } == $past({ AWADDR, AWPROT })));
+    (AWVALID && !AWREADY) |=>
+    $stable({ AWADDR, AWPROT });
 
 endproperty
 a_AW_payload_stable_while_stalled: assert property(p_AW_payload_stable_while_stalled);
@@ -26,11 +26,11 @@ a_AW_valid_sticky_until_handshake: assert property(p_AW_valid_sticky_until_hands
 // ---- W channel ----
 
 
-// (1) Payload stable while stalled (only enforced if stall continues)
+// (1) Payload stable while stalled (including the cycle that completes the handshake)
 property p_W_payload_stable_while_stalled;
   @(posedge ACLK) disable iff(!ARESETn)
-    (WVALID && !WREADY) |-> ##1
-            (!( WVALID && !WREADY ) || ({ WDATA, WSTRB } == $past({ WDATA, WSTRB })));
+    (WVALID && !WREADY) |=>
+    $stable({ WDATA, WSTRB });
 
 endproperty
 a_W_payload_stable_while_stalled: assert property(p_W_payload_stable_while_stalled);
@@ -51,11 +51,11 @@ a_W_valid_sticky_until_handshake: assert property(p_W_valid_sticky_until_handsha
 // ---- B channel ----
 
 
-// (1) Payload stable while stalled (only enforced if stall continues)
+// (1) Payload stable while stalled (including the cycle that completes the handshake)
 property p_B_payload_stable_while_stalled;
   @(posedge ACLK) disable iff(!ARESETn)
-    (BVALID && !BREADY) |-> ##1
-            (!( BVALID && !BREADY ) || ({ BRESP } == $past({ BRESP })));
+    (BVALID && !BREADY) |=>
+    $stable({ BRESP });
 
 endproperty
 a_B_payload_stable_while_stalled: assert property(p_B_payload_stable_while_stalled);
@@ -76,11 +76,11 @@ a_B_valid_sticky_until_handshake: assert property(p_B_valid_sticky_until_handsha
 // ---- AR channel ----
 
 
-// (1) Payload stable while stalled (only enforced if stall continues)
+// (1) Payload stable while stalled (including the cycle that completes the handshake)
 property p_AR_payload_stable_while_stalled;
   @(posedge ACLK) disable iff(!ARESETn)
-    (ARVALID && !ARREADY) |-> ##1
-            (!( ARVALID && !ARREADY ) || ({ ARADDR, ARPROT } == $past({ ARADDR, ARPROT })));
+    (ARVALID && !ARREADY) |=>
+    $stable({ ARADDR, ARPROT });
 
 endproperty
 a_AR_payload_stable_while_stalled: assert property(p_AR_payload_stable_while_stalled);
@@ -101,11 +101,11 @@ a_AR_valid_sticky_until_handshake: assert property(p_AR_valid_sticky_until_hands
 // ---- R channel ----
 
 
-// (1) Payload stable while stalled (only enforced if stall continues)
+// (1) Payload stable while stalled (including the cycle that completes the handshake)
 property p_R_payload_stable_while_stalled;
   @(posedge ACLK) disable iff(!ARESETn)
-    (RVALID && !RREADY) |-> ##1
-            (!( RVALID && !RREADY ) || ({ RDATA, RRESP } == $past({ RDATA, RRESP })));
+    (RVALID && !RREADY) |=>
+    $stable({ RDATA, RRESP });
 
 endproperty
 a_R_payload_stable_while_stalled: assert property(p_R_payload_stable_while_stalled);
